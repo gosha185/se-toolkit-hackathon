@@ -27,8 +27,24 @@ A full-featured web application that helps users make unbiased, random decisions
 ### Prerequisites
 - Node.js (v16 or higher)
 - npm or yarn
+- Docker (optional, recommended)
 
-### Installation
+### Option 1: Docker (Recommended)
+
+```bash
+# 1. Configure environment
+cp .env.example .env
+# Edit .env and add your QWEN_API_KEY
+
+# 2. Build and run
+docker-compose up -d
+
+# 3. Open http://localhost:5000
+```
+
+See [DOCKER.md](DOCKER.md) for detailed instructions.
+
+### Option 2: Local Installation
 
 1. **Clone the repository**
 ```bash
@@ -46,8 +62,8 @@ npm run install-all
 # Copy .env.example to .env
 copy .env.example .env
 
-# Edit .env and add your OpenAI API key (optional)
-# OPENAI_API_KEY=your-openai-api-key-here
+# Edit .env and add your Qwen API key
+# QWEN_API_KEY=your-qwen-api-key-here
 ```
 
 4. **Start the application**
