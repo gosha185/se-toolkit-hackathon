@@ -1,33 +1,41 @@
-FROM node:20-alpine
+FROM node:20-alpine AS frontend-build
 
-# Установка зависимостей для сборки
 RUN apk add --no-cache python3 make g++
 
-# Рабочая директория
+WORKDIR /app/frontend
+
+COPY frontend/package*.json ./
+
+# Установка всех зависимостей (включая devDependencies для сборки)
+RUN npm install
+
+COPY frontend/ ./
+
+# Сборка фронтенда
+RUN npm run build
+
+# Production этап
+FROM node:20-alpine
+
 WORKDIR /app
 
-# Копирование package.json
+# Копирование package.json и установка production зависимостей
 COPY package*.json ./
-COPY frontend/package*.json ./frontend/
-
-# Установка зависимостей
 RUN npm install --production
 
-# Установка зависимостей фронтенда и сборка
-RUN cd frontend && npm install && npm run build
+# Копирование собранного фронтенда
+COPY --from=frontend-build /app/frontend/build ./frontend/build
 
-# Копирование остального кода
-COPY . .
+# Копирование бэкенда
+COPY backend/ ./backend/
 
 # Создание директории для базы данных
 RUN mkdir -p /app/data
 
-# Переменные окружения по умолчанию
 ENV NODE_ENV=production
 ENV PORT=5000
 ENV DATABASE_PATH=/app/data/database.sqlite
 
 EXPOSE 5000
 
-# Запуск сервера
 CMD ["node", "backend/server.js"]
