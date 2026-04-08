@@ -56,18 +56,18 @@ const weightedRandomSelect = (optionsWithWeights) => {
     throw new Error('Total weight must be positive');
   }
 
-  // Generate random number
-  let random = Math.random() * totalWeight;
-  
-  // Select option
+  // Generate random number and use cumulative weight selection
+  const random = Math.random() * totalWeight;
+  let cumulativeWeight = 0;
+
   for (const option of optionsWithWeights) {
-    random -= option.adjustedWeight;
-    if (random <= 0) {
+    cumulativeWeight += option.adjustedWeight;
+    if (random < cumulativeWeight) {
       return option;
     }
   }
 
-  // Fallback (should not reach here)
+  // Fallback: return last option (should only happen due to floating point edge cases)
   return optionsWithWeights[optionsWithWeights.length - 1];
 };
 
