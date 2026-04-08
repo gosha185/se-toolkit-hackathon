@@ -131,11 +131,17 @@ const makeDecision = (db, userId, queryText, options, useHistoryAwareness = true
     });
 
     // Get history if enabled
-    let adjustedOptions = optionsWithIds;
+    let adjustedOptions;
     if (useHistoryAwareness) {
       const history = getDecisionHistory(db, userId, queryText, 30);
       const chosenIds = history.map(h => h.id);
       adjustedOptions = adjustWeightsBasedOnHistory(optionsWithIds, chosenIds);
+    } else {
+      // Without history — use weights as-is
+      adjustedOptions = optionsWithIds.map(opt => ({
+        ...opt,
+        adjustedWeight: opt.weight
+      }));
     }
 
     // Make weighted random selection
@@ -154,7 +160,7 @@ const makeDecision = (db, userId, queryText, options, useHistoryAwareness = true
         text: chosenOption.text
       },
       allOptions: optionsWithIds,
-      adjustedWeights: useHistoryAwareness ? adjustedOptions : null
+      adjustedWeights: adjustedOptions
     };
   });
 
