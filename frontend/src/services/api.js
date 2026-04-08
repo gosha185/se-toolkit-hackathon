@@ -1,4 +1,6 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Use relative URL for production (when served from same server)
+// Use absolute URL for local development (when frontend runs on :3000)
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 const getToken = () => localStorage.getItem('token');
 
