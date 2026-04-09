@@ -58,7 +58,7 @@ const parseNaturalLanguageQuery = async (userMessage, userId, dbInstance) => {
 
     const systemPrompt = `You are a decision parser assistant. Your task is to parse natural language queries and extract:
 1. The main intent/question (query)
-2. List of options with optional weights (chances)
+2. List of options with optional weights (chances) — extract ALL options mentioned, there can be 2 or more
 3. Time references (e.g., "last week", "yesterday")
 4. Any other relevant context
 
@@ -67,7 +67,8 @@ Respond with JSON in this exact format:
   "query": "the main decision question",
   "options": [
     {"text": "option 1", "weight": 1},
-    {"text": "option 2", "weight": 2}
+    {"text": "option 2", "weight": 2},
+    {"text": "option 3", "weight": 1}
   ],
   "time_reference": "optional time reference if mentioned",
   "context": "any additional context"
@@ -76,7 +77,7 @@ Respond with JSON in this exact format:
 Rules:
 - If no weights are mentioned, set weight to 1 for all options
 - Weights represent relative chances (higher = more likely to be chosen)
-- Try to identify options even in messy input
+- Try to identify ALL options even in messy input — do not limit to 2
 - If user mentions previous decisions, note the time reference`;
 
     const response = await openai.chat.completions.create({
