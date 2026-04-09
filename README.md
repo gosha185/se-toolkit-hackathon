@@ -4,9 +4,9 @@ AI-powered decision helper that helps users make unbiased choices with support f
 
 ## Demo
 
-![Dashboard - Decision Making](https://disk.yandex.ru/i/_-ozTWN7qDrwCA)
+Dashboard - Decision Making - https://disk.yandex.ru/i/_-ozTWN7qDrwCA
 
-![AI Agent Chat Interface](https://disk.yandex.ru/i/pVN44K5-c-E0TA)
+AI Agent Chat Interface - https://disk.yandex.ru/i/pVN44K5-c-E0TA
 
 ## Product Context
 
