@@ -1,261 +1,226 @@
-# 🎯 Decision Maker - AI-Powered Decision Helper
+# Decision Maker
 
-A full-featured web application that helps users make unbiased, random decisions with support for weighted options, decision history, and an AI agent for natural language interaction.
+AI-powered decision helper that helps users make unbiased choices with support for weighted options, decision history, and natural language AI interaction.
 
-## ✨ Features
+## Demo
 
-### Core Functionality
-- **Weighted Random Selection** - Assign different weights/chances to options
-- **History-Aware Decisions** - Automatically varies choices to avoid repetition
-- **Decision History** - Store and review all past decisions
-- **User Authentication** - Secure login/password system with JWT
-- **SQLite Database** - Lightweight, zero-configuration database
+![Dashboard - Decision Making](https://disk.yandex.ru/i/_-ozTWN7qDrwCA)
 
-### AI Agent
-- **Natural Language Processing** - Chat with an AI agent to make decisions
-- **Context Awareness** - Agent understands your decision history
-- **No Commands Needed** - Just describe what you need help with
+![AI Agent Chat Interface](https://disk.yandex.ru/i/pVN44K5-c-E0TA)
 
-### User Interface
-- **Modern React Frontend** - Built with React and Bootstrap
-- **Responsive Design** - Works on desktop and mobile
-- **Real-time Feedback** - Animated decision results and visual weights
-- **Search & Filter** - Find past decisions easily
+## Product Context
 
-## 🚀 Quick Start
+### End Users
+- People who struggle with everyday decisions (what to eat, what to watch, what book to read)
+- Teams that need to randomly distribute tasks or choose between options
+- AI enthusiasts who want to interact with AI for decision-making
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Docker (optional, recommended)
+### Problem
+Every day we face countless small decisions that cause stress and waste time on deliberation. Users often get stuck on the same options, ignoring other possibilities. Additionally, traditional random number generators don't account for preferences and don't help diversify choices.
 
-### Option 1: Docker (Recommended)
+### Solution
+Decision Maker provides a simple and intuitive interface for making decisions with two modes:
+1. **Manual Mode** — enter options with weights and let the system choose randomly
+2. **AI Agent** — simply describe your problem in natural language, and the AI will help you make a decision based on your history
 
+The system also tracks decision history to automatically diversify choices and avoid repetition.
+
+## Features
+
+### ✅ Implemented
+- **Weighted Random Selection** — assign different weights/probabilities to options
+- **Decision History** — store and review all past decisions
+- **AI Agent** — chat with AI for natural language decision-making
+- **History Awareness** — automatic choice variation to avoid repetition
+- **User Authentication** — secure login/password system with JWT
+- **Modern UI** — responsive design with React and Bootstrap
+- **SQLite Database** — lightweight, zero-configuration setup
+
+### 🚧 Not Yet Implemented
+- Categories/tags for decisions
+- Decision history export
+- Sharing decisions with others
+- Decision templates
+- Analytics dashboard
+- Mobile application
+- Multiple AI provider support
+- Voice input
+
+## Usage
+
+### Manual Mode
+1. Open the application and log in
+2. Navigate to the **"New Decision"** page
+3. Enter a question (e.g., *"What should I eat?"*)
+4. Add options with optional weights:
+   - Pizza (weight: 3) — 3x more likely
+   - Sushi (weight: 2) — 2x more likely
+   - Burgers (weight: 1) — normal chance
+5. Enable **"Use history to vary decisions"** to avoid repetition
+6. Click **"Decide for Me!"**
+
+### AI Agent Mode
+1. Navigate to the **"AI Agent"** page
+2. Describe your task in natural language:
+   - *"Choose between pizza, sushi, or burgers"*
+   - *"Help me pick: movie, book, or game"*
+   - *"Pick a color: blue (weight: 3), green, yellow"*
+3. The AI will understand your request and make a decision for you
+
+### Decision History
+1. Navigate to the **"History"** page
+2. View all your past decisions
+3. Use search to find specific decisions
+4. Review selected options and their weights
+
+## Deployment
+
+### Virtual Machine Requirements
+- **OS:** Ubuntu 24.04 LTS (or another Linux distribution)
+- **Minimum resources:** 1 vCPU, 1 GB RAM, 10 GB disk
+
+### Required Software
+- **Node.js** (v16 or higher)
+- **npm** or **yarn**
+- **Docker** and **Docker Compose** (recommended)
+- **Git**
+
+### Step-by-Step Instructions
+
+#### Option 1: Docker (Recommended)
+
+1. **Install Docker and Docker Compose**
 ```bash
-# 1. Configure environment
-cp .env.example .env
-# Edit .env and add your QWEN_API_KEY
+# Update packages
+sudo apt update && sudo apt upgrade -y
 
-# 2. Build and run
-docker-compose up -d
+# Install dependencies
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 
-# 3. Open http://localhost:5000
+# Add Docker GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Add Docker repository
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Add user to docker group
+sudo usermod -aG docker $USER
+newgrp docker
 ```
 
-See [DOCKER.md](DOCKER.md) for detailed instructions.
-
-### Option 2: Local Installation
-
-1. **Clone the repository**
+2. **Clone the repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/inno-se-toolkit/se-toolkit-hackathon
 cd se-toolkit-hackathon
-```
-
-2. **Install dependencies**
-```bash
-npm run install-all
 ```
 
 3. **Configure environment**
 ```bash
-# Copy .env.example to .env
-copy .env.example .env
-
-# Edit .env and add your Qwen API key
-# QWEN_API_KEY=your-qwen-api-key-here
+cp .env.example .env
+nano .env
+# Add your QWEN_API_KEY
 ```
 
-4. **Start the application**
-
-**Development mode (runs both backend and frontend):**
+4. **Build and run**
 ```bash
-npm run dev
-```
-
-**Or start separately:**
-```bash
-# Backend only
-npm run server
-
-# Frontend only (in another terminal)
-npm run client
+docker-compose up -d
 ```
 
 5. **Open your browser**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-
-## 📖 Usage
-
-### Making a Decision (Manual Mode)
-1. Navigate to "New Decision" page
-2. Enter your question (e.g., "What should I eat?")
-3. Add options with optional weights:
-   - Pizza (weight: 3) - 3x more likely to be chosen
-   - Sushi (weight: 2) - 2x more likely
-   - Burgers (weight: 1) - Normal chance
-4. Toggle "Use history to vary decisions" to avoid repetition
-5. Click "Decide for Me!"
-
-### Using AI Agent
-1. Go to "AI Agent" page
-2. Type naturally what you need help with:
-   - "Should I eat pizza, sushi, or burgers?"
-   - "Help me choose between: movie, book, game"
-   - "Pick a color: blue (weight: 3), green, yellow"
-3. The agent will understand and make a decision for you
-
-### Viewing History
-1. Navigate to "History" page
-2. See all your past decisions
-3. Search for specific decisions
-4. Review chosen options and weights
-
-## 🏗️ Architecture
-
-### Backend (Node.js + Express)
 ```
-backend/
-├── server.js              # Express server setup
-├── database.js            # SQLite initialization & schema
-├── middleware/
-│   └── auth.js            # JWT authentication
-├── routes/
-│   ├── auth.js            # Login/Register endpoints
-│   ├── decisions.js       # Decision CRUD & history
-│   └── agent.js           # AI agent chat & decisions
-└── utils/
-    └── randomizer.js      # Weighted selection logic
+http://<your-vm-ip>:5000
 ```
 
-### Frontend (React)
-```
-frontend/
-├── src/
-│   ├── App.js             # Main app with routing
-│   ├── index.js           # Entry point
-│   ├── context/
-│   │   └── AuthContext.js # Authentication state
-│   ├── services/
-│   │   └── api.js         # API client
-│   └── components/
-│       ├── Login.js
-│       ├── Register.js
-│       ├── Navbar.js
-│       ├── Dashboard.js        # Main decision maker
-│       ├── DecisionResult.js   # Result display
-│       ├── History.js          # Decision history
-│       └── AgentChat.js        # AI agent interface
-```
+#### Option 2: Local Installation
 
-### Database Schema
-```
-users               - User accounts
-decision_requests   - Decision queries
-options             - Available choices with weights
-decisions           - Made decisions (chosen options)
-chat_sessions       - AI conversation sessions
-```
-
-## ⚙️ Configuration
-
-### Environment Variables
-```env
-PORT=5000                           # Backend server port
-JWT_SECRET=your-secret-key          # Secret for JWT tokens
-OPENAI_API_KEY=your-key            # OpenAI API key (optional)
-DATABASE_PATH=./database.sqlite     # SQLite database file
-```
-
-### Weight System
-- Weight = 1: Normal chance
-- Weight = 2: 2x more likely to be chosen
-- Weight = 0.5: Half the normal chance
-- Weight = 0: Never chosen (excluded)
-
-### History Awareness
-When enabled, the system reduces the weight of frequently chosen options to promote variety. For example:
-- If "Pizza" was chosen 5 times recently
-- And "Sushi" was chosen 1 time
-- Pizza's effective weight is reduced by up to 50%
-
-## 🧪 Testing
-
-### Test Backend APIs
+1. **Install Node.js**
 ```bash
-# Register user
-curl -X POST http://localhost:5000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"username":"testuser","password":"testpass123"}'
+# Update packages
+sudo apt update && sudo apt upgrade -y
 
-# Make a decision (replace TOKEN with your JWT)
-curl -X POST http://localhost:5000/api/decisions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer TOKEN" \
-  -d '{"query":"What to eat?","options":[{"text":"Pizza","weight":3},{"text":"Sushi","weight":2}]}'
+# Install Node.js and npm
+sudo apt install -y nodejs npm
+
+# Check versions
+node -v  # Should be v16+
+npm -v
 ```
 
-## 📝 API Endpoints
+2. **Clone the repository**
+```bash
+git clone https://github.com/inno-se-toolkit/se-toolkit-hackathon
+cd se-toolkit-hackathon
+```
 
-### Authentication
-- `POST /api/auth/register` - Create new user
-- `POST /api/auth/login` - Login and get JWT token
-- `GET /api/auth/me` - Get current user info
+3. **Install dependencies**
+```bash
+npm run install-all
+```
 
-### Decisions
-- `POST /api/decisions` - Make a new decision
-- `GET /api/decisions/history` - Get decision history
-- `GET /api/decisions/:id` - Get decision details
-- `GET /api/decisions/stats/summary` - Get user statistics
+4. **Configure environment**
+```bash
+cp .env.example .env
+nano .env
+# Add your QWEN_API_KEY
+```
 
-### AI Agent
-- `POST /api/agent/chat` - Chat with AI agent
-- `POST /api/agent/decide` - Quick decision via AI
+5. **Start the application**
+```bash
+# Development mode (starts both backend and frontend)
+npm run dev
 
-## 🎨 Technologies
+# Or separately:
+# npm run server  # backend only
+# npm run client  # frontend only
+```
 
-### Backend
-- **Node.js** - Runtime
-- **Express.js** - Web framework
-- **SQLite3** - Database (better-sqlite3)
-- **JWT** - Authentication
-- **bcrypt** - Password hashing
-- **OpenAI API** - Natural language processing (optional)
+6. **Open your browser**
+```
+Frontend: http://<your-vm-ip>:3000
+Backend API: http://<your-vm-ip>:5000
+```
 
-### Frontend
-- **React 18** - UI library
-- **React Router** - Navigation
-- **React Bootstrap** - UI components
-- **Bootstrap 5** - Styling framework
+#### Reverse Proxy Setup (Optional)
 
-## 🔐 Security
+For production deployment, it's recommended to set up Nginx as a reverse proxy:
 
-- Passwords hashed with bcrypt
-- JWT token authentication
-- Protected API endpoints
-- SQL injection prevention (parameterized queries)
-- CORS enabled for development
+```bash
+sudo apt install -y nginx
+sudo nano /etc/nginx/sites-available/decision-maker
+```
 
-## 🌟 Future Enhancements
+Example Nginx configuration:
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
 
-- [ ] Categories/tags for decisions
-- [ ] Export decision history
-- [ ] Share decisions with others
-- [ ] Decision templates
-- [ ] Analytics dashboard
-- [ ] Mobile app
-- [ ] Multiple AI providers
-- [ ] Voice input support
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
 
-## 📄 License
+    location /api/ {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+    }
+}
+```
 
-MIT
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Activate the configuration:
+```bash
+sudo ln -s /etc/nginx/sites-available/decision-maker /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
